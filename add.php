@@ -69,6 +69,7 @@ if ($user->isLoggedIn()) {
                 ),
                 'batch_name' => array(
                     'required' => true,
+                    // 'unique' => 'batch'
                 ),
                 'amount' => array(
                     'required' => true,
@@ -76,8 +77,12 @@ if ($user->isLoggedIn()) {
                 'units' => array(
                     'required' => true,
                 ),
-                // 'remarks' => array(
+                'remarks' => array(
+                    'required' => true,
+                ),
+                // 'phone_number' => array(
                 //     'required' => true,
+                //     'unique' => 'user'
                 // ),
             ));
             if ($validate->passed()) {
@@ -89,120 +94,126 @@ if ($user->isLoggedIn()) {
                 // One month from a specific date
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
+                    $batch_name = $override->get('batch', 'name', Input::get('batch_name'));
+
                     if (Input::get('btn') == 'Add') {
-                        $user->createRecord('batch', array(
-                            'generic_id' => Input::get('generic_name'),
-                            'name' => Input::get('batch_name'),
-                            'amount' => Input::get('amount'),
-                            'brand_name' => Input::get('brand_name'),
-                            'status' => 1,
-                            'expire_date' => Input::get('expire_date'),
-                            'check_date' => date('Y-m-d'),
-                            'next_check' => $from_today,
-                            'remarks' => Input::get('remarks'),
-                            'units' => Input::get('units'),
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_id' => $user->data()->id,
-                            'site_id' => $_GET['site'],
-                            'site' => $_GET['site'],
-                            'study_id' => $_GET['study'],
-                            'study' => $_GET['study'],
-                            'category' => $_GET['category'],
-                            'maintainance' => Input::get('maintainance'),
-                        ));
+                        if (!$batch_name) {
+                            $user->createRecord('batch', array(
+                                'generic_id' => Input::get('generic_name'),
+                                'name' => Input::get('batch_name'),
+                                'amount' => Input::get('amount'),
+                                'brand_name' => Input::get('brand_name'),
+                                'status' => 1,
+                                'expire_date' => Input::get('expire_date'),
+                                'check_date' => date('Y-m-d'),
+                                'next_check' => $from_today,
+                                'remarks' => Input::get('remarks'),
+                                'units' => Input::get('units'),
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_id' => $user->data()->id,
+                                'site_id' => $_GET['site'],
+                                'site' => $_GET['site'],
+                                'study_id' => $_GET['study'],
+                                'study' => $_GET['study'],
+                                'category' => $_GET['category'],
+                                'maintainance' => Input::get('maintainance'),
+                            ));
 
 
 
-                        $batch_id = $override->lastRow('batch', 'id')[0];
+                            $batch_id = $override->lastRow('batch', 'id')[0];
 
-                        $user->createRecord('batch_records', array(
-                            'generic_id' => Input::get('generic_name'),
-                            'batch_id' => $batch_id['id'],
-                            'amount' => Input::get('amount'),
-                            'added' => 0,
-                            'removed' => 0,
-                            'brand_name' => Input::get('brand_name'),
-                            'status' => 1,
-                            'increase_date' => date('Y-m-d'),
-                            'increase_time' => date('H:i'),
-                            'remarks' => Input::get('remarks'),
-                            'units' => Input::get('units'),
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'site_id' => $_GET['site'],
-                            'site' => $_GET['site'],
-                            'study_id' => $_GET['study'],
-                            'study' => $_GET['study'],
-                            'category' => $_GET['category'],
-                        ));
+                            $user->createRecord('batch_records', array(
+                                'generic_id' => Input::get('generic_name'),
+                                'batch_id' => $batch_id['id'],
+                                'amount' => Input::get('amount'),
+                                'added' => 0,
+                                'removed' => 0,
+                                'brand_name' => Input::get('brand_name'),
+                                'status' => 1,
+                                'increase_date' => date('Y-m-d'),
+                                'increase_time' => date('H:i'),
+                                'remarks' => Input::get('remarks'),
+                                'units' => Input::get('units'),
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'site_id' => $_GET['site'],
+                                'site' => $_GET['site'],
+                                'study_id' => $_GET['study'],
+                                'study' => $_GET['study'],
+                                'category' => $_GET['category'],
+                            ));
 
-                        $user->createRecord('checking', array(
-                            'generic_id' => $batch_id['generic_id'],
-                            'batch_id' => $batch_id['id'],
-                            'amount' => $batch_id['amount'],
-                            'visit_date' => date('Y-m-d H:i:s'),
-                            'check_date' => date('Y-m-d'),
-                            'next_check' => date('Y-m-d'),
-                            'expected_date' => date('Y-m-d H:i:s'),
-                            'checking_date' => date('Y-m-d'),
-                            'checking_time' => date('H:i:s'),
-                            'units' => $batch_id['units'],
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_id' => $user->data()->id,
-                            'site_id' => $batch_id['site_id'],
-                            'site' => $batch_id['site'],
-                            'study_id' => $batch_id['study_id'],
-                            'study' => $batch_id['study'],
-                            'category' => $batch_id['category'],
-                            'maintainance' => $batch_id['maintainance'],
-                            'remarks' => $batch_id['remarks'],
-                            'next_notes' => Input::get('next_notes'),
-                            'visit_window1' => 2,
-                            'visit_window2' => 2,
-                            'status' => 1,
-                            'seq_no' => 1,
-                            'visit_status' => 1,
-                            'check_number' => 'Month 1',
-                        ));
+                            $user->createRecord('checking', array(
+                                'generic_id' => $batch_id['generic_id'],
+                                'batch_id' => $batch_id['id'],
+                                'amount' => $batch_id['amount'],
+                                'visit_date' => date('Y-m-d H:i:s'),
+                                'check_date' => date('Y-m-d'),
+                                'next_check' => date('Y-m-d'),
+                                'expected_date' => date('Y-m-d H:i:s'),
+                                'checking_date' => date('Y-m-d'),
+                                'checking_time' => date('H:i:s'),
+                                'units' => $batch_id['units'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_id' => $user->data()->id,
+                                'site_id' => $batch_id['site_id'],
+                                'site' => $batch_id['site'],
+                                'study_id' => $batch_id['study_id'],
+                                'study' => $batch_id['study'],
+                                'category' => $batch_id['category'],
+                                'maintainance' => $batch_id['maintainance'],
+                                'remarks' => $batch_id['remarks'],
+                                'next_notes' => Input::get('next_notes'),
+                                'visit_window1' => 2,
+                                'visit_window2' => 2,
+                                'status' => 1,
+                                'seq_no' => 1,
+                                'visit_status' => 1,
+                                'check_number' => 'Month 1',
+                            ));
 
-                        $last_check = $override->lastRow2('checking', 'batch_id', $batch_id['id'], 'id')[0];
-                        $sq = $last_check['seq_no'] + 1;
-                        $check_month = 'Month ' . $sq;
+                            $last_check = $override->lastRow2('checking', 'batch_id', $batch_id['id'], 'id')[0];
+                            $sq = $last_check['seq_no'] + 1;
+                            $check_month = 'Month ' . $sq;
 
-                        $user->createRecord('checking', array(
-                            'generic_id' => $batch_id['generic_id'],
-                            'batch_id' => $batch_id['id'],
-                            'amount' => $batch_id['amount'],
-                            'check_date' => '',
-                            'visit_date' => '',
-                            'next_check' => $from_today,
-                            'expected_date' => $from_today1,
-                            'units' => $batch_id['units'],
-                            'create_on' => date('Y-m-d H:i:s'),
-                            'update_on' => date('Y-m-d H:i:s'),
-                            'staff_id' => $user->data()->id,
-                            'update_id' => $user->data()->id,
-                            'site_id' => $batch_id['site_id'],
-                            'site' => $batch_id['site'],
-                            'study_id' => $batch_id['study_id'],
-                            'study' => $batch_id['study'],
-                            'category' => $batch_id['category'],
-                            'maintainance' => $batch_id['maintainance'],
-                            'remarks' => $batch_id['remarks'],
-                            'next_notes' => Input::get('next_notes'),
-                            'visit_window1' => 2,
-                            'visit_window2' => 2,
-                            'status' => 0,
-                            'seq_no' => $sq,
-                            'visit_status' => 0,
-                            'check_number' => $check_month,
-                        ));
+                            $user->createRecord('checking', array(
+                                'generic_id' => $batch_id['generic_id'],
+                                'batch_id' => $batch_id['id'],
+                                'amount' => $batch_id['amount'],
+                                'check_date' => '',
+                                'visit_date' => '',
+                                'next_check' => $from_today,
+                                'expected_date' => $from_today1,
+                                'units' => $batch_id['units'],
+                                'create_on' => date('Y-m-d H:i:s'),
+                                'update_on' => date('Y-m-d H:i:s'),
+                                'staff_id' => $user->data()->id,
+                                'update_id' => $user->data()->id,
+                                'site_id' => $batch_id['site_id'],
+                                'site' => $batch_id['site'],
+                                'study_id' => $batch_id['study_id'],
+                                'study' => $batch_id['study'],
+                                'category' => $batch_id['category'],
+                                'maintainance' => $batch_id['maintainance'],
+                                'remarks' => $batch_id['remarks'],
+                                'next_notes' => Input::get('next_notes'),
+                                'visit_window1' => 2,
+                                'visit_window2' => 2,
+                                'status' => 0,
+                                'seq_no' => $sq,
+                                'visit_status' => 0,
+                                'check_number' => $check_month,
+                            ));
 
-                        $successMessage = 'Batch Added Successful';
+                            $successMessage = 'Batch Added Successful';
+                        }else{
+                            $errorMessage = 'Batch Name already exists';
+                        }
                     } elseif (Input::get('btn') == 'Edit') {
                         $user->updateRecord('batch', array(
                             'generic_id' => Input::get('generic_name'),
@@ -497,7 +508,7 @@ if ($user->isLoggedIn()) {
                                                 <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="remarks" class="form-label">Remarks / Comments</label>
-                                                        <textarea class="form-control" name="remarks" id="remarks" rows="5">
+                                                        <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
                                                             <?php if ($batch) {
                                                                 print_r($batch['remarks']);
                                                             } ?>
@@ -509,7 +520,7 @@ if ($user->isLoggedIn()) {
                                                     <input type="hidden" name="btn" value="<?= $_GET['btn'] ?>" />
                                                     <input type="hidden" name="maintainance" id="maintainance_id" />
                                                     <a href="info.php?id=<?= $_GET['id'] ?>&gid=<?= $_GET['gid'] ?>&category=<?= $_GET['category'] ?>&btn=<?= $_GET['btn'] ?>" class="text-reset fs-16 px-1">
-                                                        << /i>Back
+                                                        <<i>Back</i>
                                                     </a>
                                                     <?php if ($_GET['btn'] != 'View') { ?>
                                                         <input type="submit" name="add_batch" value="<?= $_GET['btn'] ?>" class="btn btn-info" />

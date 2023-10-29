@@ -104,18 +104,41 @@ if (!$user->isLoggedIn()) {
                             <div class="col-lg-6">
                                 <div class="d-flex flex-column h-100">
                                     <div class="auth-brand p-4">
-                                        <!-- <a href="index.html" class="logo-light">
+                                        <h4 class="fs-20">eCTMIS</h4>
+
+                                        <a href="index.php" class="logo-light">
                                             <img src="assets/images/logo.png" alt="logo" height="22">
                                         </a>
-                                        <a href="index.html" class="logo-dark">
+                                        <a href="index.php" class="logo-dark">
                                             <img src="assets/images/logo-dark.png" alt="dark logo" height="22">
-                                        </a> -->
+                                        </a>
                                     </div>
                                     <div class="p-4 my-auto">
                                         <h4 class="fs-20">Sign In</h4>
-                                        <p class="text-muted mb-3">Enter your email address and password to access
+                                        <p class="text-muted mb-3">Enter your username and password to access
                                             account.
                                         </p>
+                                        <?php if ($successMessage) { ?>
+                                            <div class="alert alert-success alert-dismissible text-bg-success border-0 fade show" role="alert">
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <strong>Success - </strong>
+                                                <?= $successMessage ?>
+                                            </div>
+                                        <?php } elseif ($pageError) { ?>
+                                            <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <strong>Error - </strong>
+                                                <?php foreach ($pageError as $error) {
+                                                    echo $error . ' , ';
+                                                } ?>
+                                            </div>
+                                        <?php } elseif ($errorMessage) { ?>
+                                            <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
+                                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                <strong>Error - </strong>
+                                                <?= $errorMessage ?>
+                                            </div>
+                                        <?php } ?>
 
                                         <!-- form -->
                                         <form class="form-horizontal" method="post" id="validation">
@@ -143,7 +166,7 @@ if (!$user->isLoggedIn()) {
                                                 <input class="btn btn-soft-primary w-100" type="submit" value="Sign in"><i class="ri-login-circle-fill me-1"></i> <span class="fw-bold"></span>
                                             </div>
 
-                                            <div class="text-center mt-4">
+                                            <!-- <div class="text-center mt-4">
                                                 <p class="text-muted fs-16">Sign in with</p>
                                                 <div class="d-flex gap-2 justify-content-center mt-3">
                                                     <a href="javascript: void(0);" class="btn btn-soft-primary"><i class="ri-facebook-circle-fill"></i></a>
@@ -151,7 +174,7 @@ if (!$user->isLoggedIn()) {
                                                     <a href="javascript: void(0);" class="btn btn-soft-info"><i class="ri-twitter-fill"></i></a>
                                                     <a href="javascript: void(0);" class="btn btn-soft-dark"><i class="ri-github-fill"></i></a>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </form>
                                         <!-- end form-->
                                     </div>
