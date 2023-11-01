@@ -411,6 +411,68 @@
                         </div>
 
                     </li>
+
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#Reports" aria-expanded="false" aria-controls="Reports" class="side-nav-link">
+                            <i class="ri-share-line"></i>
+                            <span> Reports </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="Reports">
+                            <ul class="side-nav-second-level">
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#Reports1" aria-expanded="false" aria-controls="Reports1">
+                                        <span> Reports 1 </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="Reports1">
+                                        <ul class="side-nav-second-level">
+                                            <?php
+                                            $x = 1;
+                                            foreach ($override->get('use_group', 'status', 1) as $categoryE) {
+                                            ?>
+                                                <li class="side-nav-item">
+                                                    <a data-bs-toggle="collapse" href="#Reports1<?= $categoryE['id']; ?>" aria-expanded="false" aria-controls="Reports1<?= $categoryE['id']; ?>">
+                                                        <span> <?= $categoryE['name']; ?> </span>
+                                                        <span class="menu-arrow"></span>
+                                                    </a>
+                                                    <div class="collapse" id="Reports1<?= $categoryE['id']; ?>">
+                                                        <ul class="side-nav-third-level">
+                                                            <?php
+                                                            $x = 1;
+                                                            foreach ($override->get('sites', 'status', 1) as $sitesE) {
+                                                            ?>
+                                                                <li class="side-nav-item">
+                                                                    <a data-bs-toggle="collapse" href="#Reports1Sites<?= $sitesE['id']; ?>" aria-expanded="false" aria-controls="Reports1Sites<?= $sitesE['id']; ?>">
+                                                                        <span> <?= $sitesE['name']; ?> </span>
+                                                                        <span class="menu-arrow"></span>
+                                                                    </a>
+                                                                    <div class="collapse" id="Reports1Sites<?= $sitesE['id']; ?>">
+                                                                        <ul class="side-nav-forth-level">
+                                                                            <?php
+                                                                            foreach ($override->get('study', 'status', 1) as $valueE) {
+                                                                            ?>
+                                                                                <li>
+                                                                                    <a href="info.php?id=5&category=<?= $categoryE['id']; ?>&site=<?= $sitesE['id']; ?>&study=<?= $valueE['id']; ?>&expiration=expired"><?= $valueE['name']; ?></a>
+                                                                                </li>
+                                                                            <?php } ?>
+                                                                        </ul>
+                                                                    </div>
+                                                                </li>
+                                                            <?php } ?>
+                                                        </ul>
+                                                    </div>
+                                                </li>
+                                            <?php
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </li>
                 </ul>
                 <!--- End Sidemenu -->
 
