@@ -38,7 +38,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#generic" aria-expanded="false" aria-controls="generic" class="side-nav-link">
                             <i class="ri-share-line"></i>
-                            <span> Generic </span>
+                            <span> Item Name </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="generic">
