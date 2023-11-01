@@ -404,7 +404,7 @@ if ($user->isLoggedIn()) {
                                                         <input type="hidden" name="id" value="<?= $_GET['gid'] ?>" />
                                                         <input type="hidden" name="btn" value="<?= $_GET['btn'] ?>" />
                                                         <a href="info.php?id=<?= $_GET['id'] ?>&gid=<?= $_GET['gid'] ?>&category=<?= $_GET['category'] ?>&btn=<?= $_GET['btn'] ?>" class="text-reset fs-16 px-1">
-                                                            << /i>Back
+                                                            < Back
                                                         </a>
                                                         <?php if ($_GET['btn'] != 'View') { ?>
                                                             <input type="submit" name="add_generic" value="<?= $_GET['btn'] ?>" class="btn btn-info" />
