@@ -93,8 +93,8 @@ if ($user->isLoggedIn()) {
                 // One month from a specific date
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
-                    $batch_name = $override->get('batch', 'name', Input::get('batch_name'));
-
+                    $batch_name = $override->getNews('batch', 'generic_id', Input::get('generic_name'),'name', Input::get('batch_name'));
+                    
                     if (Input::get('btn') == 'Add') {
                         if (!$batch_name) {
                             $user->createRecord('batch', array(
