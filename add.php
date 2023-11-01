@@ -90,7 +90,6 @@ if ($user->isLoggedIn()) {
                 $from_today = date('Y-m-d', strtotime('+1 month'));
                 $from_today1 = date('Y-m-d H:i:s', strtotime('+1 month'));
 
-
                 // One month from a specific date
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
@@ -362,7 +361,7 @@ if ($user->isLoggedIn()) {
                                                                                     } ?>" id="name" name="name" class="form-control" placeholder="Enter generic name" required>
                                                     </div>
                                                     <div class="mb-3">
-                                                        <label for="notification" class="form-label">Notification</label>
+                                                        <label for="notification" class="form-label">Required</label>
                                                         <input type="number" value="<?php if ($generic) {
                                                                                         print_r($generic['notification']);
                                                                                     } ?>" id="notification" name="notification" min="0" max="100000" class="form-control" placeholder="Enter notification amount" required />
