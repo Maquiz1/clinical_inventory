@@ -45,7 +45,7 @@
                             <ul class="side-nav-second-level">
                                 <li class="side-nav-item">
                                     <a data-bs-toggle="collapse" href="#genericAdd" aria-expanded="false" aria-controls="genericAdd">
-                                        <span> Add </span>
+                                        <span> Add New</span>
                                         <span class="menu-arrow"></span>
                                     </a>
                                     <div class="collapse" id="genericAdd">
