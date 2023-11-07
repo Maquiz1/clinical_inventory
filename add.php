@@ -439,7 +439,7 @@ if ($user->isLoggedIn()) {
                                             <div class="row">
                                                 <div class="col-lg-4">
                                                     <div class="mb-2">
-                                                        <label for="generic_name" class="form-label">Generic</label>
+                                                        <label for="generic_name" class="form-label">Item Name</label>
                                                         <select id="generic_name" name="generic_name" class="form-select form-select-lg mb-3" required>
                                                             <option value="<?= $generic['id'] ?>"><?php if ($batch) {
                                                                                                         print_r($generic['name']);
