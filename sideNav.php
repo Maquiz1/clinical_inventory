@@ -106,36 +106,8 @@
                                             <?php
                                             foreach ($override->get('use_group', 'status', 1) as $categoryB) {
                                             ?>
-                                                <li class="side-nav-item">
-                                                    <a data-bs-toggle="collapse" href="#BatchAdd<?= $categoryB['id']; ?>" aria-expanded="false" aria-controls="BatchAdd<?= $categoryB['id']; ?>">
-                                                        <span> <?= $categoryB['name']; ?> </span>
-                                                        <span class="menu-arrow"></span>
-                                                    </a>
-                                                    <div class="collapse" id="BatchAdd<?= $categoryB['id']; ?>">
-                                                        <ul class="side-nav-third-level">
-                                                            <?php
-                                                            foreach ($override->get('sites', 'status', 1) as $siteB) {
-                                                            ?>
-                                                                <li class="side-nav-item">
-                                                                    <a data-bs-toggle="collapse" href="#BatchAddSites<?= $siteB['id']; ?>" aria-expanded="false" aria-controls="BatchAddSites<?= $siteB['id'] ?>">
-                                                                        <span> <?= $siteB['name'] ?> </span>
-                                                                        <span class="menu-arrow"></span>
-                                                                    </a>
-                                                                    <div class="collapse" id="BatchAddSites<?= $siteB['id'] ?>">
-                                                                        <ul class="side-nav-forth-level">
-                                                                            <?php
-                                                                            foreach ($override->get('study', 'status', 1) as $valueB) {
-                                                                            ?>
-                                                                                <li>
-                                                                                    <a href="add.php?id=2&category=<?= $categoryB['id']; ?>&site=<?= $siteB['id']; ?>&study=<?= $valueB['id']; ?>&btn=Add"><?= $valueB['name']; ?></a>
-                                                                                </li>
-                                                                            <?php } ?>
-                                                                        </ul>
-                                                                    </div>
-                                                                </li>
-                                                            <?php } ?>
-                                                        </ul>
-                                                    </div>
+                                                <li>
+                                                    <a href="add.php?id=2&category=<?= $categoryB['id']; ?>&btn=Add"><?= $categoryB['name']; ?></a>
                                                 </li>
                                             <?php
                                             }

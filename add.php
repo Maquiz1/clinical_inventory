@@ -93,8 +93,8 @@ if ($user->isLoggedIn()) {
                 // One month from a specific date
                 $date = date('Y-m-d', strtotime('+1 month', strtotime('2015-01-01')));
                 try {
-                    $batch_name = $override->getNews('batch', 'generic_id', Input::get('generic_name'),'name', Input::get('batch_name'));
-                    
+                    $batch_name = $override->getNews('batch', 'generic_id', Input::get('generic_name'), 'name', Input::get('batch_name'));
+
                     if (Input::get('btn') == 'Add') {
                         if (!$batch_name) {
                             $user->createRecord('batch', array(
@@ -112,10 +112,10 @@ if ($user->isLoggedIn()) {
                                 'update_on' => date('Y-m-d H:i:s'),
                                 'staff_id' => $user->data()->id,
                                 'update_id' => $user->data()->id,
-                                'site_id' => $_GET['site'],
-                                'site' => $_GET['site'],
-                                'study_id' => $_GET['study'],
-                                'study' => $_GET['study'],
+                                'site_id' => Input::get('site'),
+                                'site' => Input::get('site'),
+                                'study_id' => Input::get('study'),
+                                'study' => Input::get('study'),
                                 'category' => $_GET['category'],
                                 'maintainance' => Input::get('maintainance'),
                             ));
@@ -138,10 +138,10 @@ if ($user->isLoggedIn()) {
                                 'units' => Input::get('units'),
                                 'create_on' => date('Y-m-d H:i:s'),
                                 'staff_id' => $user->data()->id,
-                                'site_id' => $_GET['site'],
-                                'site' => $_GET['site'],
-                                'study_id' => $_GET['study'],
-                                'study' => $_GET['study'],
+                                'site_id' => Input::get('site'),
+                                'site' => Input::get('site'),
+                                'study_id' => Input::get('study'),
+                                'study' => Input::get('study'),
                                 'category' => $_GET['category'],
                             ));
 
@@ -160,10 +160,10 @@ if ($user->isLoggedIn()) {
                                 'update_on' => date('Y-m-d H:i:s'),
                                 'staff_id' => $user->data()->id,
                                 'update_id' => $user->data()->id,
-                                'site_id' => $batch_id['site_id'],
-                                'site' => $batch_id['site'],
-                                'study_id' => $batch_id['study_id'],
-                                'study' => $batch_id['study'],
+                                'site_id' => Input::get('site'),
+                                'site' => Input::get('site'),
+                                'study_id' => Input::get('study'),
+                                'study' => Input::get('study'),
                                 'category' => $batch_id['category'],
                                 'maintainance' => $batch_id['maintainance'],
                                 'remarks' => $batch_id['remarks'],
@@ -210,7 +210,7 @@ if ($user->isLoggedIn()) {
                             ));
 
                             $successMessage = 'Batch Added Successful';
-                        }else{
+                        } else {
                             $errorMessage = 'Batch Name already exists';
                         }
                     } elseif (Input::get('btn') == 'Edit') {
@@ -404,11 +404,10 @@ if ($user->isLoggedIn()) {
                                                         <input type="hidden" name="id" value="<?= $_GET['gid'] ?>" />
                                                         <input type="hidden" name="btn" value="<?= $_GET['btn'] ?>" />
                                                         <a href="info.php?id=<?= $_GET['id'] ?>&gid=<?= $_GET['gid'] ?>&category=<?= $_GET['category'] ?>&btn=<?= $_GET['btn'] ?>" class="text-reset fs-16 px-1">
-                                                            < Back
-                                                        </a>
-                                                        <?php if ($_GET['btn'] != 'View') { ?>
-                                                            <input type="submit" name="add_generic" value="<?= $_GET['btn'] ?>" class="btn btn-info" />
-                                                        <?php } ?>
+                                                            < Back </a>
+                                                                <?php if ($_GET['btn'] != 'View') { ?>
+                                                                    <input type="submit" name="add_generic" value="<?= $_GET['btn'] ?>" class="btn btn-info" />
+                                                                <?php } ?>
                                                     </div>
                                                 </div> <!-- end col -->
                                             </div>
@@ -503,7 +502,36 @@ if ($user->isLoggedIn()) {
                                                             <?php } ?>
                                                         </select>
                                                     </div>
-                                                </div> <!-- end col -->
+                                                </div>
+                                                <!-- end col -->
+                                                <div class="mb-2">
+                                                    <label for="study" class="form-label">Study Name</label>
+                                                    <select id="study" name="study" class="form-select form-select-lg mb-3" required>
+                                                        <option value="<?= $generic['id'] ?>"><?php if ($batch) {
+                                                                                                    print_r($generic['name']);
+                                                                                                } else {
+                                                                                                    echo 'Select study name';
+                                                                                                } ?>
+                                                        </option>
+                                                        <?php foreach ($override->get('study', 'status', 1) as $value) { ?>
+                                                            <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="mb-2">
+                                                    <label for="site" class="form-label">SIte Name</label>
+                                                    <select id="site" name="site" class="form-select form-select-lg mb-3" required>
+                                                        <option value="<?= $generic['id'] ?>"><?php if ($batch) {
+                                                                                                    print_r($generic['name']);
+                                                                                                } else {
+                                                                                                    echo 'Select site name';
+                                                                                                } ?>
+                                                        </option>
+                                                        <?php foreach ($override->get('sites', 'status', 1) as $value) { ?>
+                                                            <option value="<?= $value['id'] ?>"><?= $value['name'] ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
                                                 <div class="col-12">
                                                     <div class="mb-3">
                                                         <label for="remarks" class="form-label">Remarks / Comments</label>
