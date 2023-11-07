@@ -38,52 +38,39 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#generic" aria-expanded="false" aria-controls="generic" class="side-nav-link">
                             <i class="ri-share-line"></i>
-                            <span>Give Item Name </span>
+                            <span>Give Item New Name </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="generic">
                             <ul class="side-nav-second-level">
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#genericAdd" aria-expanded="false" aria-controls="genericAdd">
-                                        <span> Add New</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="genericAdd">
-                                        <ul class="side-nav-second-level">
-                                            <ul class="side-nav-forth-level">
-                                                <?php
-                                                $x = 1;
-                                                foreach ($override->get('use_group', 'status', 1) as $categoryG) {
-                                                ?>
-                                                    <li>
-                                                        <a href="add.php?id=1&category=<?= $categoryG['id']; ?>&btn=Add"><?= $categoryG['name']; ?></a>
-                                                    </li>
-                                                <?php } ?>
-                                            </ul>
-                                        </ul>
-                                    </div>
-                                </li>
+                                <?php
+                                $x = 1;
+                                foreach ($override->get('use_group', 'status', 1) as $categoryG) {
+                                ?>
+                                    <li>
+                                        <a href="add.php?id=1&category=<?= $categoryG['id']; ?>&btn=Add"><?= $categoryG['name']; ?></a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </li>
 
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#genericManage" aria-expanded="false" aria-controls="genericManage">
-                                        <span> Manage </span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="genericManage">
-                                        <ul class="side-nav-second-level">
-                                            <ul class="side-nav-forth-level">
-                                                <?php
-                                                $x = 1;
-                                                foreach ($override->get('use_group', 'status', 1) as $categoryM) {
-                                                ?>
-                                                    <li>
-                                                        <a href="info.php?id=1&category=<?= $categoryM['id']; ?>"><?= $categoryM['name']; ?></a>
-                                                    </li>
-                                                <?php } ?>
-                                            </ul>
-                                        </ul>
-                                    </div>
-                                </li>
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#Mgeneric" aria-expanded="false" aria-controls="generic" class="side-nav-link">
+                            <i class="ri-share-line"></i>
+                            <span>Manges Items </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="Mgeneric">
+                            <ul class="side-nav-second-level">
+                                <?php
+                                $x = 1;
+                                foreach ($override->get('use_group', 'status', 1) as $categoryM) {
+                                ?>
+                                    <li>
+                                        <a href="info.php?id=1&category=<?= $categoryM['id']; ?>"><?= $categoryM['name']; ?></a>
+                                    </li>
+                                <?php } ?>
                             </ul>
                         </div>
                     </li>
@@ -91,30 +78,20 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#Batch" aria-expanded="false" aria-controls="Batch" class="side-nav-link">
                             <i class="ri-share-line"></i>
-                            <span>New Batches </span>
+                            <span>Add New Batches </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="Batch">
                             <ul class="side-nav-second-level">
-                                <li class="side-nav-item">
-                                    <a data-bs-toggle="collapse" href="#BatchAdd" aria-expanded="false" aria-controls="BatchAdd">
-                                        <span> Add New</span>
-                                        <span class="menu-arrow"></span>
-                                    </a>
-                                    <div class="collapse" id="BatchAdd">
-                                        <ul class="side-nav-second-level">
-                                            <?php
-                                            foreach ($override->get('use_group', 'status', 1) as $categoryB) {
-                                            ?>
-                                                <li>
-                                                    <a href="add.php?id=2&category=<?= $categoryB['id']; ?>&btn=Add"><?= $categoryB['name']; ?></a>
-                                                </li>
-                                            <?php
-                                            }
-                                            ?>
-                                        </ul>
-                                    </div>
-                                </li>
+                                <?php
+                                foreach ($override->get('use_group', 'status', 1) as $categoryB) {
+                                ?>
+                                    <li>
+                                        <a href="add.php?id=2&category=<?= $categoryB['id']; ?>&btn=Add"><?= $categoryB['name']; ?></a>
+                                    </li>
+                                <?php
+                                }
+                                ?>
                             </ul>
                         </div>
                     </li>
