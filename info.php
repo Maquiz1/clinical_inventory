@@ -127,6 +127,9 @@ if ($user->isLoggedIn()) {
                 'remarks' => array(
                     'required' => true,
                 ),
+                'location' => array(
+                    'required' => true,
+                ),
             ));
             if ($validate->passed()) {
 
@@ -148,6 +151,7 @@ if ($user->isLoggedIn()) {
                     'increase_time' => Input::get('increase_time'),
                     'remarks' => Input::get('remarks'),
                     'units' => Input::get('units'),
+                    'location' => Input::get('location'),
                     'create_on' => date('Y-m-d H:i:s'),
                     'staff_id' => $user->data()->id,
                     'site_id' => Input::get('site_id'),
@@ -175,43 +179,47 @@ if ($user->isLoggedIn()) {
                 'remarks' => array(
                     'required' => true,
                 ),
+                'location' => array(
+                    'required' => true,
+                ),
             ));
             if ($validate->passed()) {
 
-                if (Input::get('added') <= Input::get('amount')) {
+                // if (Input::get('added') <= Input::get('amount')) {
 
-                    $amount = Input::get('amount') -  Input::get('added');
-                    $added =  Input::get('added');
+                $amount = Input::get('amount') -  Input::get('added');
+                $added =  Input::get('added');
 
-                    $user->updateRecord('batch', array(
-                        'amount' => $amount,
-                    ), Input::get('id'));
+                $user->updateRecord('batch', array(
+                    'amount' => $amount,
+                ), Input::get('id'));
 
-                    $user->createRecord('batch_records', array(
-                        'generic_id' => Input::get('generic_id'),
-                        'batch_id' => Input::get('id'),
-                        'amount' => $amount,
-                        'added' => 0,
-                        'removed' => $added,
-                        'brand_name' => Input::get('brand_name'),
-                        'status' => 1,
-                        'increase_date' => Input::get('dispense_date'),
-                        'increase_time' => Input::get('dispense_time'),
-                        'remarks' => Input::get('remarks'),
-                        'units' => Input::get('units'),
-                        'create_on' => date('Y-m-d H:i:s'),
-                        'staff_id' => $user->data()->id,
-                        'site_id' => Input::get('site_id'),
-                        'site' => Input::get('site_id'),
-                        'study_id' => Input::get('study_id'),
-                        'study' => Input::get('study_id'),
-                        'category' => Input::get('category'),
-                    ));
+                $user->createRecord('batch_records', array(
+                    'generic_id' => Input::get('generic_id'),
+                    'batch_id' => Input::get('id'),
+                    'amount' => $amount,
+                    'added' => 0,
+                    'removed' => $added,
+                    'brand_name' => Input::get('brand_name'),
+                    'status' => 1,
+                    'increase_date' => Input::get('dispense_date'),
+                    'increase_time' => Input::get('dispense_time'),
+                    'remarks' => Input::get('remarks'),
+                    'units' => Input::get('units'),
+                    'location' => Input::get('location'),
+                    'create_on' => date('Y-m-d H:i:s'),
+                    'staff_id' => $user->data()->id,
+                    'site_id' => Input::get('site_id'),
+                    'site' => Input::get('site_id'),
+                    'study_id' => Input::get('study_id'),
+                    'study' => Input::get('study_id'),
+                    'category' => Input::get('category'),
+                ));
 
-                    $successMessage = 'Dispensed Successful';
-                } else {
-                    $errorMessage = 'Amount not Enough';
-                }
+                $successMessage = 'Dispensed Successful';
+                // } else {
+                //     $errorMessage = 'Amount not Enough';
+                // }
             } else {
                 $pageError = $validate->errors();
             }
@@ -624,6 +632,14 @@ if ($user->isLoggedIn()) {
                                                                                             <label for="added" class="form-label">Enter amount</label>
                                                                                             <input type="number" value="" min="0" id="added" name="added" class="form-control" placeholder="Enter amount" required />
                                                                                         </div>
+                                                                                    </div>
+                                                                                    <div class="mb-4">
+                                                                                        <label for="location" class="form-label">Location Name</label>
+                                                                                        <select id="location" name="location" class="form-select form-select-lg mb-3" required>
+                                                                                            <?php foreach ($override->get('location', 'status', 1) as $location) { ?>
+                                                                                                <option value="<?= $location['id'] ?>"><?= $location['name'] ?></option>
+                                                                                            <?php } ?>
+                                                                                        </select>
                                                                                     </div>
                                                                                     <div class="col-8">
                                                                                         <div class="mb-3">
