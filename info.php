@@ -636,6 +636,7 @@ if ($user->isLoggedIn()) {
                                                                                     <div class="mb-4">
                                                                                         <label for="location" class="form-label">Location Name</label>
                                                                                         <select id="location" name="location" class="form-select form-select-lg mb-3" required>
+                                                                                            <option value="">Select Location</option>
                                                                                             <?php foreach ($override->get('location', 'status', 1) as $location) { ?>
                                                                                                 <option value="<?= $location['id'] ?>"><?= $location['name'] ?></option>
                                                                                             <?php } ?>
