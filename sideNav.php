@@ -38,7 +38,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#generic" aria-expanded="false" aria-controls="generic" class="side-nav-link">
                             <i class="ri-share-line"></i>
-                            <span> Item Name </span>
+                            <span>Give Item Name </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="generic">
@@ -91,7 +91,7 @@
                     <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#Batch" aria-expanded="false" aria-controls="Batch" class="side-nav-link">
                             <i class="ri-share-line"></i>
-                            <span> Batches </span>
+                            <span>New Batches </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="Batch">
