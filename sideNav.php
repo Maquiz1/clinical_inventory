@@ -97,6 +97,26 @@
                     </li>
 
                     <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#Lgeneric" aria-expanded="false" aria-controls="generic" class="side-nav-link">
+                            <i class="ri-share-line"></i>
+                            <span>List of all Items </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="Lgeneric">
+                            <ul class="side-nav-second-level">
+                                <?php
+                                $x = 1;
+                                foreach ($override->get('use_group', 'status', 1) as $categoryM) {
+                                ?>
+                                    <li>
+                                        <a href="info.php?id=6&category=<?= $categoryM['id']; ?>"><?= $categoryM['name']; ?></a>
+                                    </li>
+                                <?php } ?>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="side-nav-item">
                         <a data-bs-toggle="collapse" href="#CheckingCalibration" aria-expanded="false" aria-controls="CheckingCalibration" class="side-nav-link">
                             <i class="ri-share-line"></i>
                             <span> Checking / Calibration </span>
