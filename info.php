@@ -1338,10 +1338,11 @@ if ($user->isLoggedIn()) {
 
                                                         $amnt = 0;
                                                         foreach ($override->getNews('batch', 'status', 1, 'category', $_GET['category']) as $batch_list1) {
+                                                            // print_r($batch_list1['generic_id']);
                                                             $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $batch_list1['gid'], 'status', 1)[0]['SUM(amount)'];
-                                                            $generic = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
-                                                            $units = $override->getNews('units', 'status', 1, 'id', $value['units'])[0]['name'];
-                                                            $checking = $override->lastRow2('checking', 'batch_id', $value['id'], 'id')[0];
+                                                            $generic_name = $override->getNews('generic', 'status', 1, 'id', $batch_list1['generic_id'])[0];
+                                                            $units = $override->getNews('units', 'status', 1, 'id', $batch_list1['units'])[0]['name'];
+                                                            $checking = $override->lastRow2('checking', 'batch_id', $batch_list1['id'], 'id')[0];
 
                                                             $balance = 0;
                                                             $total = 'Out of Stock';
@@ -1349,7 +1350,7 @@ if ($user->isLoggedIn()) {
                                                             if ($batch_list1['amount'] > 0) {
                                                                 $balance = $batch_list1['amount'];
                                                                 $total = ' ';
-                                                                if ($generic['maintainance'] == 1) {
+                                                                if ($batch_list1['maintainance'] == 1) {
                                                                     $status = 'Not Checked';
                                                                     if ($checking['visit_status']) {
                                                                         $status = 'Checked';
@@ -1366,7 +1367,7 @@ if ($user->isLoggedIn()) {
                                                     ?>
                                                             <tr>
                                                                 <td class="table-user">
-                                                                    <?= $generic['name']; ?>
+                                                                    <?= $generic_name['name']; ?>
                                                                 </td>
                                                                 <td class="table-user">
                                                                     <?= $batch_list1['name']; ?>
