@@ -1334,11 +1334,11 @@ if ($user->isLoggedIn()) {
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                    if ($override->getNews('batch', 'status', 1,'category', $_GET['category'])) {
+                                                    if ($override->getNews('batch', 'status', 1, 'category', $_GET['category'])) {
 
                                                         $amnt = 0;
-                                                        foreach ($override->getNews('batch', 'status', 1,'category', $_GET['category']) as $batch_list1) {
-                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['gid'], 'status', 1)[0]['SUM(amount)'];
+                                                        foreach ($override->getNews('batch', 'status', 1, 'category', $_GET['category']) as $batch_list1) {
+                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $batch_list1['gid'], 'status', 1)[0]['SUM(amount)'];
                                                             $generic = $override->getNews('generic', 'status', 1, 'id', $_GET['gid'])[0];
                                                             $units = $override->getNews('units', 'status', 1, 'id', $value['units'])[0]['name'];
                                                             $checking = $override->lastRow2('checking', 'batch_id', $value['id'], 'id')[0];
@@ -1346,8 +1346,8 @@ if ($user->isLoggedIn()) {
                                                             $balance = 0;
                                                             $total = 'Out of Stock';
 
-                                                            if ($value['amount'] > 0) {
-                                                                $balance = $value['amount'];
+                                                            if ($batch_list1['amount'] > 0) {
+                                                                $balance = $batch_list1['amount'];
                                                                 $total = ' ';
                                                                 if ($generic['maintainance'] == 1) {
                                                                     $status = 'Not Checked';
@@ -1356,7 +1356,7 @@ if ($user->isLoggedIn()) {
                                                                     }
                                                                 } else {
                                                                     $status = 'Valid';
-                                                                    if ($value['expire_date'] <= date('Y-m-d')) {
+                                                                    if ($batch_list1['expire_date'] <= date('Y-m-d')) {
                                                                         $status = 'Expired';
                                                                     }
                                                                 }
@@ -1369,35 +1369,35 @@ if ($user->isLoggedIn()) {
                                                                     <?= $generic['name']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $value['name']; ?>
+                                                                    <?= $batch_list1['name']; ?>
                                                                 </td>
                                                                 <td class="table-user">
-                                                                    <?= $balance; ?>
+                                                                    <?= $batch_list1['amount']; ?>
                                                                 </td>
                                                                 <td class="table-user">
                                                                     <?= $units; ?>
                                                                 </td>
-                                                                <?php if ($generic['maintainance'] == 2) { ?>
+                                                                <?php if ($batch_list1['maintainance'] == 2) { ?>
 
                                                                     <td class="table-user">
-                                                                        <?= $value['expire_date']; ?>
+                                                                        <?= $batch_list1['expire_date']; ?>
                                                                     </td>
                                                                 <?php   } ?>
-                                                                <?php if ($generic['maintainance'] == 1) { ?>
+                                                                <?php if ($batch_list1['maintainance'] == 1) { ?>
 
                                                                     <td class="table-user">
-                                                                        <?= $value['check_date']; ?>
+                                                                        <?= $batch_list1['check_date']; ?>
                                                                     </td>
                                                                     <td class="table-user">
-                                                                        <?= $value['next_check']; ?>
+                                                                        <?= $batch_list1['next_check']; ?>
                                                                     </td>
                                                                 <?php   } ?>
 
                                                                 <td><?= $total . ' - ' . $status; ?></td>
 
                                                                 <td class="text-center">
-                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $value['id'] ?>&category=<?= $_GET['category'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
-                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $value['id'] ?>&category=<?= $_GET['category'] ?>&btn=Edit" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
+                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $batch_list1['id'] ?>&category=<?= $_GET['category'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
+                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $batch_list1['id'] ?>&category=<?= $_GET['category'] ?>&btn=Edit" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
                                                                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#increase<?= $value['id'] ?>">Increase</button>
                                                                     <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dispense<?= $value['id'] ?>">Dispense</button>
                                                                     <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a>
