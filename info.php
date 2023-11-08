@@ -1338,7 +1338,7 @@ if ($user->isLoggedIn()) {
 
                                                         $amnt = 0;
                                                         foreach ($override->getNews('batch', 'status', 1, 'category', $_GET['category']) as $batch_list1) {
-                                                            // print_r($batch_list1['generic_id']);
+                                                            // print_r($batch_list1['id']);
                                                             $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $batch_list1['gid'], 'status', 1)[0]['SUM(amount)'];
                                                             $generic_name = $override->getNews('generic', 'status', 1, 'id', $batch_list1['generic_id'])[0];
                                                             $units = $override->getNews('units', 'status', 1, 'id', $batch_list1['units'])[0]['name'];
@@ -1399,12 +1399,12 @@ if ($user->isLoggedIn()) {
                                                                 <td class="text-center">
                                                                     <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $batch_list1['id'] ?>&category=<?= $_GET['category'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
                                                                     <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $batch_list1['id'] ?>&category=<?= $_GET['category'] ?>&btn=Edit" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
-                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#increase<?= $value['id'] ?>">Increase</button>
-                                                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dispense<?= $value['id'] ?>">Dispense</button>
-                                                                    <a href="#delete_batch<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $value['id'] ?>">Delete</a>
+                                                                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#increase<?= $batch_list1['id'] ?>">Increase</button>
+                                                                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#dispense<?= $batch_list1['id'] ?>">Dispense</button>
+                                                                    <a href="#delete_batch<?= $batch_list1['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $batch_list1['id'] ?>">Delete</a>
                                                                 </td>
                                                             </tr>
-                                                            <div id="increase<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                            <div id="increase<?= $batch_list1['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <form id="validation" method="post">
@@ -1444,14 +1444,14 @@ if ($user->isLoggedIn()) {
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="generic_id" value="<?= $generic['id'] ?>">
-                                                                                <input type="hidden" name="amount" value="<?= $value['amount'] ?>">
-                                                                                <input type="hidden" name="units" value="<?= $value['units'] ?>">
-                                                                                <input type="hidden" name="category" value="<?= $generic['category'] ?>">
-                                                                                <input type="hidden" name="brand_name" value="<?= $value['brand_name'] ?>">
-                                                                                <input type="hidden" name="study_id" value="<?= $value['study_id'] ?>">
-                                                                                <input type="hidden" name="site_id" value="<?= $value['site_id'] ?>">
+                                                                                <input type="hidden" name="id" value="<?= $batch_list1['id'] ?>">
+                                                                                <input type="hidden" name="generic_id" value="<?= $batch_list1['generic_id'] ?>">
+                                                                                <input type="hidden" name="amount" value="<?= $batch_list1['amount'] ?>">
+                                                                                <input type="hidden" name="units" value="<?= $batch_list1['units'] ?>">
+                                                                                <input type="hidden" name="category" value="<?= $batch_list1['category'] ?>">
+                                                                                <input type="hidden" name="brand_name" value="<?= $batch_list1['brand_name'] ?>">
+                                                                                <input type="hidden" name="study_id" value="<?= $batch_list1['study_id'] ?>">
+                                                                                <input type="hidden" name="site_id" value="<?= $batch_list1['site_id'] ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                                                                 <input type="submit" name="Increase_batch" class="btn btn-primary" value="Save">
                                                                             </div>
@@ -1459,7 +1459,7 @@ if ($user->isLoggedIn()) {
                                                                     </form>
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
-                                                            <div id="dispense<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                            <div id="dispense<?= $batch_list1['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
                                                                 <div class="modal-dialog">
                                                                     <div class="modal-content">
                                                                         <form id="validation" method="post">
@@ -1508,14 +1508,14 @@ if ($user->isLoggedIn()) {
                                                                                 </div>
                                                                             </div>
                                                                             <div class="modal-footer">
-                                                                                <input type="hidden" name="id" value="<?= $value['id'] ?>">
-                                                                                <input type="hidden" name="generic_id" value="<?= $generic['id'] ?>">
-                                                                                <input type="hidden" name="amount" value="<?= $value['amount'] ?>">
-                                                                                <input type="hidden" name="units" value="<?= $value['units'] ?>">
-                                                                                <input type="hidden" name="category" value="<?= $generic['category'] ?>">
-                                                                                <input type="hidden" name="brand_name" value="<?= $value['brand_name'] ?>">
-                                                                                <input type="hidden" name="study_id" value="<?= $value['study_id'] ?>">
-                                                                                <input type="hidden" name="site_id" value="<?= $value['site_id'] ?>">
+                                                                                <input type="hidden" name="id" value="<?= $batch_list1['id'] ?>">
+                                                                                <input type="hidden" name="generic_id" value="<?= $batch_list1['generic_id'] ?>">
+                                                                                <input type="hidden" name="amount" value="<?= $batch_list1['amount'] ?>">
+                                                                                <input type="hidden" name="units" value="<?= $batch_list1['units'] ?>">
+                                                                                <input type="hidden" name="category" value="<?= $batch_list1['category'] ?>">
+                                                                                <input type="hidden" name="brand_name" value="<?= $batch_list1['brand_name'] ?>">
+                                                                                <input type="hidden" name="study_id" value="<?= $batch_list1['study_id'] ?>">
+                                                                                <input type="hidden" name="site_id" value="<?= $batch_list1['site_id'] ?>">
                                                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
                                                                                 <input type="submit" name="Dispense_batch" class="btn btn-primary" value="Save">
                                                                             </div>
@@ -1524,7 +1524,7 @@ if ($user->isLoggedIn()) {
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
                                                             <!-- Danger Alert Modal -->
-                                                            <div id="delete_batch<?= $value['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                                            <div id="delete_batch<?= $batch_list1['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
                                                                 <div class="modal-dialog modal-sm">
                                                                     <form method="post">
                                                                         <div class="modal-content modal-filled bg-danger">
@@ -1535,7 +1535,7 @@ if ($user->isLoggedIn()) {
                                                                                     </button>
                                                                                     <h4 class="mt-2">Delete!</h4>
                                                                                     <p class="mt-3">Are you sure you want to delete this Batch Name?</p>
-                                                                                    <input type="hidden" name="id" value="<?= $value['id'] ?>">
+                                                                                    <input type="hidden" name="id" value="<?= $batch_list1['id'] ?>">
                                                                                     <input type="submit" name="delete_batch" value="Delete" class="btn btn-danger">
                                                                                     <!-- <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button> -->
                                                                                 </div>
