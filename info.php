@@ -30,7 +30,7 @@ if ($user->isLoggedIn()) {
                     $user->updateRecord('batch', array(
                         'status' => 0,
                     ), Input::get('id'));
-                    $successMessage = 'Name Deleted Successful';
+                    $successMessage = 'Batch Name Deleted Successful';
                 } catch (Exception $e) {
                     die($e->getMessage());
                 }
@@ -351,28 +351,28 @@ if ($user->isLoggedIn()) {
                                                     <?php
                                                     if ($override->getNews('generic', 'status', 1, 'category', $_GET['category'])) {
                                                         $amnt = 0;
-                                                        foreach ($override->getNews('generic', 'status', 1, 'category', $_GET['category']) as $value) {
-                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value['id'], 'status', 1)[0]['SUM(amount)'];
+                                                        foreach ($override->getNews('generic', 'status', 1, 'category', $_GET['category']) as $value1) {
+                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $value1['id'], 'status', 1)[0]['SUM(amount)'];
                                                             $balance = 0;
                                                             $total = 'Out of Stock';
-                                                            if ($batch_total > 0 & $batch_total <= $value['notification']) {
+                                                            if ($batch_total > 0 & $batch_total <= $value1['notification']) {
                                                                 $balance = $batch_total;
                                                                 $total = 'Sufficient';
-                                                            } elseif ($batch_total > $value['notification']) {
+                                                            } elseif ($batch_total > $value1['notification']) {
                                                                 $balance = $batch_total;
                                                                 $total = 'Running Low';
                                                             }
 
 
                                                             if (!$total == 'Out of Stock') {
-                                                                if ($value['maintainance'] == 1) {
+                                                                if ($value1['maintainance'] == 1) {
                                                                     $status = 'Checked';
-                                                                    if ($value['status'] == 1) {
+                                                                    if ($value1['status'] == 1) {
                                                                         $status = 'Not Checked';
                                                                     }
                                                                 } else {
                                                                     $status = 'Valid';
-                                                                    if ($value['status'] == 1) {
+                                                                    if ($value1['status'] == 1) {
                                                                         $status = 'Expired';
                                                                     }
                                                                 }
@@ -381,15 +381,15 @@ if ($user->isLoggedIn()) {
                                                     ?>
                                                             <tr>
                                                                 <td class="table-user">
-                                                                    <?= $value['name']; ?>
+                                                                    <?= $value1['name']; ?>
                                                                 </td>
                                                                 <td><?= $balance; ?></td>
                                                                 <td><?= $total . ' - ' . $status; ?></td>
                                                                 <td class="text-center">
-                                                                    <a href="add.php?id=1&gid=<?= $value['id'] ?>&category=<?= $_GET['category'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
-                                                                    <a href="add.php?id=1&gid=<?= $value['id'] ?>&category=<?= $_GET['category'] ?>&btn=Edit" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Edit</a>
-                                                                    <a href="info.php?id=2&gid=<?= $value['id'] ?>&category=<?= $_GET['category'] ?>&btn=details" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>Details</a>
-                                                                    <a href="#delete<?= $value['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#danger-alert-modal">Delete</a>
+                                                                    <a href="add.php?id=1&gid=<?= $value1['id'] ?>&category=<?= $_GET['category'] ?>&btn=View" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>View</a>
+                                                                    <a href="add.php?id=1&gid=<?= $value1['id'] ?>&category=<?= $_GET['category'] ?>&btn=Edit" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Edit</a>
+                                                                    <a href="info.php?id=2&gid=<?= $value1['id'] ?>&category=<?= $_GET['category'] ?>&btn=details" class="text-reset fs-16 px-1"> <i class="ri-edit-circle-line"></i>Details</a>
+                                                                    <a href="#delete<?= $value1['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#danger-alert-modal">Delete</a>
                                                                     <a href="javascript: void(0);" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Locations</a>
                                                                 </td>
                                                             </tr>
@@ -404,8 +404,8 @@ if ($user->isLoggedIn()) {
                                                                                         <i class="ri-close-circle-line h1"> </i>
                                                                                     </button>
                                                                                     <h4 class="mt-2">Delete!</h4>
-                                                                                    <p class="mt-3">Are you sure you want to delete this Generic Name?</p>
-                                                                                    <input type="hidden" name="id" value="<?= $value['id'] ?>">
+                                                                                    <p class="mt-3">Are you sure you want to delete this Item Name?</p>
+                                                                                    <input type="hidden" name="id" value="<?= $value1['id'] ?>">
                                                                                     <input type="submit" name="delete_generic" value="Delete" class="btn btn-danger">
                                                                                     <!-- <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button> -->
                                                                                 </div>
