@@ -123,22 +123,22 @@ $output .= '
             <th colspan="2">Units</th>
         
         ';
-        
-        if ($_GET['category'] == 1 || $_GET['group'] == 3 || $_GET['group'] == 4) {
 
-            $output .= '
+if ($_GET['category'] == 1 || $_GET['group'] == 3 || $_GET['group'] == 4) {
+
+    $output .= '
                 
                 <th colspan="2">Date Expired</th>
             ';
-        }
+}
 
-        if ($_GET['category'] == 2) {
+if ($_GET['category'] == 2) {
 
-            $output .= '
+    $output .= '
                 <th colspan="2">Next Check</th>   
             ';
-        }
-            $output .= '
+}
+$output .= '
         
                 <th colspan="2">Status</th>
 
@@ -155,11 +155,22 @@ foreach ($data as $row) {
     $category_name = $override->get('units', 'id', $row['units'])[0]['name'];
     $gen_name = $override->get('generic', 'id', $row['generic_id'])[0];
 
-    if ($row['expire_date'] <= date('Y-m-d')) {
-        $status = 'Expired';
-    } else {
-        $status = 'Valid';
+    if ($row['maintainance'] == 1) {
+        if ($row['expire_date'] <= date('Y-m-d')) {
+            $status = 'Expired';
+        } else {
+            $status = 'Valid';
+        }
     }
+
+    if ($row['maintainance'] == 2) {
+        if ($row['next_check'] <= date('Y-m-d')) {
+            $status = 'Checked';
+        } else {
+            $status = 'Not Checked';
+        }
+    }
+
 
     if ($row['amount'] <= 0) {
         $balance_status = 'Out of Stock';
