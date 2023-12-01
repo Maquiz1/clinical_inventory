@@ -130,7 +130,7 @@ $output .= '
         
         ';
 
-if ($_GET['category'] == 1 || $_GET['group'] == 3 || $_GET['group'] == 4) {
+if ($_GET['category'] == 1 || $_GET['category'] == 3 || $_GET['category'] == 4) {
 
     $output .= '
                 
