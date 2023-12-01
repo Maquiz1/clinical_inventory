@@ -9,6 +9,10 @@ $validate = new validate();
 $successMessage = null;
 $pageError = null;
 $errorMessage = null;
+
+
+// $email->resetPassword(Input::get('email'), Input::get('firstname'), 'Password Reset');
+
 if ($user->isLoggedIn()) {
     if (Input::exists('post')) {
         if (Input::get('delete_generic')) {
