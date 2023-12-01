@@ -154,6 +154,8 @@ $x = 1;
 foreach ($data as $row) {
     $category_name = $override->get('units', 'id', $row['units'])[0]['name'];
     $gen_name = $override->get('generic', 'id', $row['generic_id'])[0];
+    $checking = $override->lastRow('checking', 'id')[0];
+
 
     if ($row['maintainance'] == 2) {
         if ($row['expire_date'] <= date('Y-m-d')) {
@@ -164,11 +166,16 @@ foreach ($data as $row) {
     }
 
     if ($row['maintainance'] == 1) {
-        if ($row['next_check'] <= date('Y-m-d')) {
-            $status = 'Checked';
-        } else {
+        if ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == 0) {
             $status = 'Not Checked';
-        }
+        } elseif ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == 1) {
+            $status = 'Checked';
+        } 
+        // elseif ($checking['next_check'] > date('Y-m-d') && $checking['status'] == 1) {
+        //     $status = 'Checked';
+        // } else {
+        //     $status = 'Checked';
+        // }
     }
 
 
