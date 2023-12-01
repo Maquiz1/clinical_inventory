@@ -153,7 +153,7 @@ $output .= '
 
 foreach ($data as $row) {
     $category_name = $override->get('units', 'id', $row['units'])[0]['name'];
-    $gen_name = $override->get('generic', 'id', $row['generic_id'])[0]['name'];
+    $gen_name = $override->get('generic', 'id', $row['generic_id'])[0];
 
     if ($row['expire_date'] <= date('Y-m-d')) {
         $status = 'Expired';
@@ -164,7 +164,7 @@ foreach ($data as $row) {
     if ($row['amount'] <= 0) {
         $balance_status = 'Out of Stock';
         $quantity = 'Out of Stock';
-    } elseif ($row['amount'] > 0 && $row['amount'] < $row['notify_quantity']) {
+    } elseif ($row['amount'] > 0 && $row['amount'] < $gen_name['notification']) {
         $balance_status = 'Running Low';
         $quantity = 'Running Low';
     } else {
@@ -176,7 +176,7 @@ foreach ($data as $row) {
     $output .= '
          <tr>
             <td colspan="2">' . $x . '</td>
-            <td colspan="2">' . $gen_name . '</td>
+            <td colspan="2">' . $gen_name['name'] . '</td>
             <td colspan="2">' . $row['name'] . '</td>
             <td colspan="2">' . $row['amount'] . '</td>
             <td colspan="2">' . $category_name .
