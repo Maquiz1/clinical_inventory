@@ -12,6 +12,10 @@ if ($user->isLoggedIn()) {
             case 0:
                 $data = $override->getNewsASC('batch', 'status', 1, 'category', $_GET['category'], 'id');
                 $data_count = $override->getNewsASCCount('batch', 'status', 1, 'category', $_GET['category'], 'id');
+                // $var_dump =
+                // $var_dump = var_dump($override->lastRow2('checking', 'batch_id', 1, 'id'));
+
+
                 break;
                 // case 1:
                 //     $data = $override->getNewsASC0('batch', 'status',1, 'expire_date', date('Y-m-d'), 'id');
@@ -41,6 +45,8 @@ if ($user->isLoggedIn()) {
 $span0 = 14;
 $span1 = 7;
 $span2 = 7;
+
+// print_r($var_dump);
 
 if ($_GET['category'] == 1) {
     $title =
@@ -111,7 +117,7 @@ $output .= '
     <table width="100%" border="1" cellpadding="5" cellspacing="0">
         <tr>
             <td colspan="' . $span0 . '" align="center" style="font-size: 18px">
-                <b>' . $title . ':  Total ( ' . $data_count . ' )</b>
+                <b>' . $title . ':  Total ( ' . $data_count . ' ) </b>
             </td>
         </tr>
     
@@ -148,15 +154,15 @@ $output .= '
 
 // Load HTML content into dompdf
 $x = 1;
-// $status = '';
-// $balance_status = '';
+$status = '';
+$balance_status = '';
 
 foreach ($data as $row) {
     $category_name = $override->get('units', 'id', $row['units'])[0]['name'];
     $gen_name = $override->get('generic', 'id', $row['generic_id'])[0];
     $checking = $override->lastRow2('checking', 'batch_id', $row['batch_id'], 'id')[0];
 
-    // print_r($checking['generic_id']);
+    // var_dump($checking['next_check']);
 
 
     if ($row['maintainance'] == 2) {
@@ -167,12 +173,15 @@ foreach ($data as $row) {
         }
     }
 
+    // $nxt_visit = date('Y-m-d', strtotime($nxt_visit . ' - 1 days'));
+    $next_check = date('Y-m-d', strtotime($checking['next_check']));
+
     if ($row['maintainance'] == 1) {
-        if ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == '1') {
+        if ($next_check <= date('Y-m-d') && $checking['status'] == 1) {
             $status = 'Checked';
-        } elseif ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == '0') {
+        } elseif ($next_check < date('Y-m-d')&& $checking['status'] == 0) {
             $status = 'Not Checked';
-        } elseif ($checking['next_check'] > date('Y-m-d')) {
+        } elseif ($next_check > date('Y-m-d')) {
             $status = 'Checked';
         }
         //  else {
