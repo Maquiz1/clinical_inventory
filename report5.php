@@ -147,7 +147,7 @@ $output .= '
      ';
 
 // Load HTML content into dompdf
-// $x = 1;
+$x = 1;
 // $status = '';
 // $balance_status = '';
 
