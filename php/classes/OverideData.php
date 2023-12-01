@@ -114,6 +114,13 @@ class OverideData{
         return $result;
     }
 
+        public function getNewsASCCount($table, $where, $id, $where2, $id2, $name)
+    {
+        $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 = '$id2' ORDER BY $name ASC");
+        $num = $query->rowCount();
+        return $num;
+    }
+
     public function getNewsASC0($table, $where, $id, $where2, $id2, $name)
     {
         $query = $this->_pdo->query("SELECT * FROM $table WHERE $where = '$id' AND $where2 > '$id2' ORDER BY $name ASC");

@@ -10,25 +10,25 @@ if ($user->isLoggedIn()) {
     try {
         switch (Input::get('report')) {
             case 0:
-                $data = $override->getNewsASC0('batch', 'status', 1, 'category',$_GET['category'], 'batch_no');
-                $data_count = $override->getNewsASC0Count('batch', 'status', 1,'category', $_GET['category'], 'batch_no');
+                $data = $override->getNewsASC('batch', 'status', 1, 'category', $_GET['category'], 'id');
+                $data_count = $override->getNewsASCCount('batch', 'status', 1, 'category', $_GET['category'], 'id');
                 break;
-            case 1:
-                $data = $override->getNewsASC0('batch', 'status',1, 'expire_date', date('Y-m-d'), 'batch_no');
-                $data_count = $override->getNewsASC0Count('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'batch_no');
-                break;
-            case 2:
-                $data = $override->getNewsASC0G('batch', 'status', 1,'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'batch_no');
-                $data_count = $override->getNewsASC0CountG('batch', 'status', 1,'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'batch_no');
-                break;
-            case 3:
-                $data = $override->getNewsASC0G('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'batch_no');
-                $data_count = $override->getNewsASC0CountG('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'batch_no');
-                break;
-            case 4:
-                $data = $override->getNewsASC0G('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'batch_no');
-                $data_count = $override->getNewsASC0CountG('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'batch_no');
-                break;
+                // case 1:
+                //     $data = $override->getNewsASC0('batch', 'status',1, 'expire_date', date('Y-m-d'), 'id');
+                //     $data_count = $override->getNewsASC0Count('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'id');
+                //     break;
+                // case 2:
+                //     $data = $override->getNewsASC0G('batch', 'status', 1,'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'id');
+                //     $data_count = $override->getNewsASC0CountG('batch', 'status', 1,'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'id');
+                //     break;
+                // case 3:
+                //     $data = $override->getNewsASC0G('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'id');
+                //     $data_count = $override->getNewsASC0CountG('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'id');
+                //     break;
+                // case 4:
+                //     $data = $override->getNewsASC0G('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'id');
+                //     $data_count = $override->getNewsASC0CountG('batch', 'status', 1, 'expire_date', date('Y-m-d'), 'use_group', $_GET['group'], 'id');
+                //     break;
         }
         $successMessage = 'Report Successful Created';
     } catch (Exception $e) {
@@ -42,30 +42,29 @@ $span0 = 14;
 $span1 = 7;
 $span2 = 7;
 
-if ($_GET['group'] == 1) {
+if ($_GET['category'] == 1) {
     $title =
-    $quantity . ' Inventory ( Medicines )';
-} elseif ($_GET['group'] == 2) {
+        $quantity . ' Inventory List ( Medicines )';
+} elseif ($_GET['category'] == 2) {
     $title =
-    $quantity . ' Valid Inventory (Medical Equipments)';
+        $quantity . ' Inventory List (Medical Equipments)';
     $span0 = 14;
     $span1 = 7;
     $span2 = 7;
-} elseif ($_GET['group'] == 3) {
+} elseif ($_GET['category'] == 3) {
     $title =
-    $quantity .  ' Valid Inventory ( Accessories )';
-    
-} elseif ($_GET['group'] == 4) {
+        $quantity .  ' Inventory List ( Accessories )';
+} elseif ($_GET['category'] == 4) {
     $title =
-    $quantity . ' Valid  Inventory ( Supplies )';
+        $quantity . ' Inventory List ( Supplies )';
 } else {
     $title =
-        $quantity . '  Valid'. ' Total Inventory ';
+        $quantity . '  Valid' . ' Total Inventory ';
 }
 
 $pdf = new Pdf();
 
-$file_name = $title .' - '. date('Y-m-d') .  '.pdf';
+$file_name = $title . ' - ' . date('Y-m-d') .  '.pdf';
 
 $output = ' ';
 
@@ -99,7 +98,7 @@ $output .= '
         <header>
             <div><span class="page"> e-CTMIS Report </span></div>
             <div class="tittle">IFAKARA HEALTH INSTITUTE</div>
-            <div class="period">'. date('Y-m-d') . '</div>
+            <div class="period">' . date('Y-m-d') . '</div>
         </header>
         <footer>
             <div>SOP CODE IHIBAG-CLN_031_V01: <span class="page"></span></div>
@@ -108,10 +107,10 @@ $output .= '
 
 ';
 
-    $output .= '
+$output .= '
     <table width="100%" border="1" cellpadding="5" cellspacing="0">
         <tr>
-            <td colspan="'.$span0.'" align="center" style="font-size: 18px">
+            <td colspan="' . $span0 . '" align="center" style="font-size: 18px">
                 <b>' . $title . ':  Total ( ' . $data_count . ' )</b>
             </td>
         </tr>
@@ -119,75 +118,104 @@ $output .= '
         <tr>
             <th colspan="2">No.</th>
             <th colspan="2">Generic Name No.</th>
-            <th colspan="2">Batch No.</th>
+            <th colspan="2">Serial / Batch No.</th>
             <th colspan="2">Available Quantity</th>
-            <th colspan="2">Categry</th>
-            <th colspan="2">Date Expired</th>
-            <th colspan="2">Status</th>
+            <th colspan="2">Units</th>
+        
+        ';
+        
+        if ($_GET['category'] == 1 || $_GET['group'] == 3 || $_GET['group'] == 4) {
+
+            $output .= '
+                
+                <th colspan="2">Date Expired</th>
+            ';
+        }
+
+        if ($_GET['category'] == 2) {
+
+            $output .= '
+                <th colspan="2">Next Check</th>   
+            ';
+        }
+            $output .= '
+        
+                <th colspan="2">Status</th>
+
         </tr>
     
      ';
 
-    // Load HTML content into dompdf
-    $x = 1;
-    $status = '';
-    $balance_status = '';
+// Load HTML content into dompdf
+// $x = 1;
+// $status = '';
+// $balance_status = '';
 
-    foreach ($data as $row) {
-        $category_name = $override->get('drug_cat', 'id', $row['category'])[0]['name'];
-        $gen_name = $override->get('generic', 'id', $row['generic_id'])[0]['name'];
+foreach ($data as $row) {
+    $category_name = $override->get('units', 'id', $row['units'])[0]['name'];
+    $gen_name = $override->get('generic', 'id', $row['generic_id'])[0]['name'];
 
-        if ($row['expire_date'] <= date('Y-m-d')) {
-            $status = 'Expired';        
-        } else{
-            $status = 'Valid';        
-        }
+    if ($row['expire_date'] <= date('Y-m-d')) {
+        $status = 'Expired';
+    } else {
+        $status = 'Valid';
+    }
 
-        if ($row['balance'] <= 0) {
-            $balance_status = 'Out of Stock';
-            $quantity = 'Out of Stock';
-
-        } elseif($row['balance'] > 0 && $row['balance'] < $row['notify_quantity']){
-            $balance_status = 'Running Low';
-            $quantity = 'Running Low';
-
-        } else {
-            $balance_status = 'Sufficient';
-            $quantity = 'Sufficient';
-
-        }
+    if ($row['amount'] <= 0) {
+        $balance_status = 'Out of Stock';
+        $quantity = 'Out of Stock';
+    } elseif ($row['amount'] > 0 && $row['amount'] < $row['notify_quantity']) {
+        $balance_status = 'Running Low';
+        $quantity = 'Running Low';
+    } else {
+        $balance_status = 'Sufficient';
+        $quantity = 'Sufficient';
+    }
 
 
-        $output .= '
+    $output .= '
          <tr>
             <td colspan="2">' . $x . '</td>
             <td colspan="2">' . $gen_name . '</td>
-            <td colspan="2">' . $row['batch_no'] . '</td>
-            <td colspan="2">' . $row['balance'] . '</td>
-            <td colspan="2">' . $category_name . '</td>
+            <td colspan="2">' . $row['name'] . '</td>
+            <td colspan="2">' . $row['amount'] . '</td>
+            <td colspan="2">' . $category_name .
+        '</td>
+
+        ';
+
+    if ($row['maintainance'] == 1) {
+
+        $output .= '
+
             <td colspan="2">' . $row['expire_date'] . '</td>
+
+        ';
+    }
+
+
+    $output .= '
+
+            ';
+
+    if ($row['maintainance'] == 2) {
+
+        $output .= '
+            <td colspan="2">' . $row['next_check'] . '</td>
+
+        ';
+    }
+
+
+    $output .= '
             <td colspan="2">' . $status . '</td>
         </tr>
         ';
 
-        $x += 1;
-    
-    }
+    $x += 1;
+}
 
-    $output .= '
-    <tr>
-        <td colspan="' . $span1 . '" align="center" style="font-size: 18px">
-            <br />
-            <p align="right">----' . $user->data()->firstname . ' ' . $user->data()->lastname . '-----<br />Printed By</p>
-            <br />
-        </td>
-
-        <td colspan="' . $span2 . '" align="center" style="font-size: 18px">
-            <br />
-            <p align="right">-----' . date('Y-m-d') . '-------<br />Date Printed</p>
-            <br />
-        </td>
-    </tr>
+$output .= '
 </table>  
     ';
 
