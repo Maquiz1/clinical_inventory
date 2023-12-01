@@ -154,7 +154,9 @@ $x = 1;
 foreach ($data as $row) {
     $category_name = $override->get('units', 'id', $row['units'])[0]['name'];
     $gen_name = $override->get('generic', 'id', $row['generic_id'])[0];
-    $checking = $override->lastRow('checking', 'id')[0];
+    $checking = $override->lastRow2('checking', 'batch_id', $row['batch_id'], 'id')[0];
+
+    // print_r($checking['generic_id']);
 
 
     if ($row['maintainance'] == 2) {
@@ -166,14 +168,14 @@ foreach ($data as $row) {
     }
 
     if ($row['maintainance'] == 1) {
-        if ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == 0) {
-            $status = 'Not Checked';
-        } elseif ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == 1) {
+        if ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == '1') {
             $status = 'Checked';
-        } 
-        // elseif ($checking['next_check'] > date('Y-m-d') && $checking['status'] == 1) {
-        //     $status = 'Checked';
-        // } else {
+        } elseif ($checking['next_check'] <= date('Y-m-d') && $checking['status'] == '0') {
+            $status = 'Not Checked';
+        } elseif ($checking['next_check'] > date('Y-m-d')) {
+            $status = 'Checked';
+        }
+        //  else {
         //     $status = 'Checked';
         // }
     }
