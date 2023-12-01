@@ -953,12 +953,12 @@ if ($user->isLoggedIn()) {
 
                                                                 <td class="text-center">
                                                                     <div class="form-check form-checkbox-success mb-2">
-                                                                        <input type="checkbox" class="form-check-input" id="customCheckcolor2" <?php if ($value['visit_status']) {
+                                                                        <input type="checkbox" class="form-check-input" id="customCheckcolor2" <?php if ($value['visit_status'] == 1) {
                                                                                                                                                     echo 'checked';
-                                                                                                                                                } ?> <?php if ($value['visit_status']) {
+                                                                                                                                                } ?> <?php if ($value['visit_status'] == 1) {
                                                                                                                                                             echo 'disabled';
                                                                                                                                                         } ?>>
-                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#standard-modal<?= $value['id'] ?>" <?php if ($value['visit_status']) {
+                                                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#standard-modal<?= $value['id'] ?>" <?php if ($value['visit_status'] == 1) {
                                                                                                                                                                                                         echo 'disabled';
                                                                                                                                                                                                     } ?>>Check</button>
                                                                     </div>
