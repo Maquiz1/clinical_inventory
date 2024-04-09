@@ -262,6 +262,31 @@
                         </div>
 
                     </li>
+                    <li class="side-nav-item">
+                        <a data-bs-toggle="collapse" href="#Locations" aria-expanded="false" aria-controls="Locations" class="side-nav-link">
+                            <i class="ri-share-line"></i>
+                            <span> Extra </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="Locations">
+                            <ul class="side-nav-second-level">
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#Locations1" aria-expanded="false" aria-controls="Locations1">
+                                        <span> Locations </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="Locations1">
+                                        <ul class="side-nav-second-level">
+                                            <li>
+                                                <a href="info.php?id=7">View Locations</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+                    </li>
                 </ul>
                 <!--- End Sidemenu -->
 

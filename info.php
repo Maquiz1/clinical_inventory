@@ -1313,7 +1313,6 @@ if ($user->isLoggedIn()) {
 
                                             ?>
                                         </h4>
-
                                     </div>
 
                                     <div class="card-body">
@@ -1549,6 +1548,245 @@ if ($user->isLoggedIn()) {
                                                                 </div><!-- /.modal-dialog -->
                                                             </div><!-- /.modal -->
                                                         <?php }
+                                                    } else {
+                                                        ?>
+                                                        <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
+                                                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                                                            <strong>Opps! - </strong> No records found!
+                                                        </div>
+                                                    <?php
+                                                    } ?>
+                                                </tbody>
+                                            </table>
+                                        </div> <!-- end table-responsive-->
+
+                                    </div> <!-- end card body-->
+                                </div> <!-- end card -->
+                            </div><!-- end col-->
+                        </div>
+                        <!-- end row-->
+
+                    <?php } elseif ($_GET['id'] == 7) { ?>
+                        <?php
+                        $locations = $override->get('location', 'status', 1);
+                        ?>
+                        <div class="row">
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h4 class="header-title"><?= $Sub_Tiltle; ?></h4>
+                                        <!-- <p class="text-muted mb-0">
+                                        Add <code>.table-bordered</code> & <code>.border-primary</code> can be added to
+                                        change colors.
+                                    </p> -->
+                                        <h4 class="header-title text-end">
+                                            <a href="info.php?id=1&category=<?= $_GET['category'] ?>" class="text-reset fs-16 px-1">
+                                                << /i>Back
+                                            </a>
+                                            <?php
+                                            // header("location:javascript://history.go(-1)");
+
+                                            ?>
+                                        </h4>
+                                    </div>
+
+                                    <div class="card-body">
+                                        <div class="table-responsive-sm">
+                                            <table class="table table-bordered border-primary table-centered mb-0">
+                                                <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Name</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                    $x = 1;
+                                                    if ($override->get('location', 'status', 1)) {
+                                                        $amnt = 0;
+                                                        foreach ($override->get('location', 'status', 1) as $location) {
+                                                            // print_r($batch_list1['id']);
+                                                            $batch_total = $override->getSumD2('batch', 'amount', 'generic_id', $batch_list1['gid'], 'status', 1)[0]['SUM(amount)'];
+                                                            $generic_name = $override->getNews('generic', 'status', 1, 'id', $batch_list1['generic_id'])[0];
+                                                            $units = $override->getNews('units', 'status', 1, 'id', $batch_list1['units'])[0]['name'];
+                                                            $checking = $override->lastRow2('checking', 'batch_id', $batch_list1['id'], 'id')[0];
+
+                                                            $balance = 0;
+                                                            $total = 'Out of Stock';
+
+                                                            if ($batch_list1['amount'] > 0) {
+                                                                $balance = $batch_list1['amount'];
+                                                                $total = ' ';
+                                                                if ($batch_list1['maintainance'] == 1) {
+                                                                    $status = 'Not Checked';
+                                                                    if ($checking['visit_status']) {
+                                                                        $status = 'Checked';
+                                                                    }
+                                                                } else {
+                                                                    $status = 'Valid';
+                                                                    if ($batch_list1['expire_date'] <= date('Y-m-d')) {
+                                                                        $status = 'Expired';
+                                                                    }
+                                                                }
+                                                            }
+
+
+                                                    ?>
+                                                            <tr>
+                                                                <td class="table-user">
+                                                                    <?= $x; ?>
+                                                                </td>
+                                                                <td class="table-user">
+                                                                    <?= $location['name']; ?>
+                                                                </td>
+                                                                <td class="text-center">
+                                                                    <a href="add.php?id=2&gid=<?= $_GET['gid'] ?>&bid=<?= $batch_list1['id'] ?>&category=<?= $_GET['category'] ?>&btn=Edit" class="text-reset fs-16 px-1"> <i class="ri-edit-box-line"></i>Update</a>
+                                                                    <a href="#delete_batch<?= $batch_list1['id'] ?>" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#delete_batch<?= $batch_list1['id'] ?>">Delete</a>
+                                                                </td>
+                                                            </tr>
+                                                            <div id="increase<?= $batch_list1['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <form id="validation" method="post">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title" id="standard-modalLabel">Increase</h4>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="increase_date" class="form-label">Enter Date</label>
+                                                                                            <input type="date" value="" id="increase_date" name="increase_date" class="form-control" placeholder="Enter increase date" required />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="increase_time" class="form-label">Enter Time</label>
+                                                                                            <input type="time" value="" id="increase_time" name="increase_time" class="form-control" placeholder="Enter increase time" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <div class="col-4">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="added" class="form-label">Enter amount</label>
+                                                                                            <input type="number" value="" min="0" id="added" name="added" class="form-control" placeholder="Enter amount" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
+                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
+                                                                                             </textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <input type="hidden" name="id" value="<?= $batch_list1['id'] ?>">
+                                                                                <input type="hidden" name="generic_id" value="<?= $batch_list1['generic_id'] ?>">
+                                                                                <input type="hidden" name="amount" value="<?= $batch_list1['amount'] ?>">
+                                                                                <input type="hidden" name="units" value="<?= $batch_list1['units'] ?>">
+                                                                                <input type="hidden" name="category" value="<?= $batch_list1['category'] ?>">
+                                                                                <input type="hidden" name="brand_name" value="<?= $batch_list1['brand_name'] ?>">
+                                                                                <input type="hidden" name="study_id" value="<?= $batch_list1['study_id'] ?>">
+                                                                                <input type="hidden" name="site_id" value="<?= $batch_list1['site_id'] ?>">
+                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                                <input type="submit" name="Increase_batch" class="btn btn-primary" value="Save">
+                                                                            </div>
+                                                                    </div><!-- /.modal-content -->
+                                                                    </form>
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div><!-- /.modal -->
+                                                            <div id="dispense<?= $batch_list1['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="standard-modalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <form id="validation" method="post">
+                                                                            <div class="modal-header">
+                                                                                <h4 class="modal-title" id="standard-modalLabel">Dispense</h4>
+                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                            </div>
+                                                                            <div class="modal-body">
+                                                                                <div class="row">
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="increase_date" class="form-label">Enter Date</label>
+                                                                                            <input type="date" value="" id="dispense_date" name="dispense_date" class="form-control" placeholder="Enter increase date" required />
+                                                                                        </div>
+                                                                                    </div>
+
+                                                                                    <div class="col-6">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="increase_time" class="form-label">Enter Time</label>
+                                                                                            <input type="time" value="" id="dispense_time" name="dispense_time" class="form-control" placeholder="Enter increase time" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <hr>
+                                                                                    <div class="col-4">
+                                                                                        <div class="mb-2">
+                                                                                            <label for="added" class="form-label">Enter amount</label>
+                                                                                            <input type="number" value="" min="0" id="added" name="added" class="form-control" placeholder="Enter amount" required />
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div class="mb-4">
+                                                                                        <label for="location" class="form-label">Location Name</label>
+                                                                                        <select id="location" name="location" class="form-select form-select-lg mb-3" required>
+                                                                                            <option value="">Select Location</option>
+                                                                                            <?php foreach ($override->get('location', 'status', 1) as $location) { ?>
+                                                                                                <option value="<?= $location['id'] ?>"><?= $location['name'] ?></option>
+                                                                                            <?php } ?>
+                                                                                        </select>
+                                                                                    </div>
+                                                                                    <div class="col-8">
+                                                                                        <div class="mb-3">
+                                                                                            <label for="remarks" class="form-label">Remarks / Comments</label>
+                                                                                            <textarea class="form-control" name="remarks" id="remarks" rows="5" required>
+                                                                                             </textarea>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <input type="hidden" name="id" value="<?= $batch_list1['id'] ?>">
+                                                                                <input type="hidden" name="generic_id" value="<?= $batch_list1['generic_id'] ?>">
+                                                                                <input type="hidden" name="amount" value="<?= $batch_list1['amount'] ?>">
+                                                                                <input type="hidden" name="units" value="<?= $batch_list1['units'] ?>">
+                                                                                <input type="hidden" name="category" value="<?= $batch_list1['category'] ?>">
+                                                                                <input type="hidden" name="brand_name" value="<?= $batch_list1['brand_name'] ?>">
+                                                                                <input type="hidden" name="study_id" value="<?= $batch_list1['study_id'] ?>">
+                                                                                <input type="hidden" name="site_id" value="<?= $batch_list1['site_id'] ?>">
+                                                                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                                                                <input type="submit" name="Dispense_batch" class="btn btn-primary" value="Save">
+                                                                            </div>
+                                                                    </div><!-- /.modal-content -->
+                                                                    </form>
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div><!-- /.modal -->
+                                                            <!-- Danger Alert Modal -->
+                                                            <div id="delete_batch<?= $batch_list1['id'] ?>" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+                                                                <div class="modal-dialog modal-sm">
+                                                                    <form method="post">
+                                                                        <div class="modal-content modal-filled bg-danger">
+                                                                            <div class="modal-body p-4">
+                                                                                <div class="text-center">
+                                                                                    <button type="button" data-bs-dismiss="modal" aria-label="Close">
+                                                                                        <i class="ri-close-circle-line h1"> </i>
+                                                                                    </button>
+                                                                                    <h4 class="mt-2">Delete!</h4>
+                                                                                    <p class="mt-3">Are you sure you want to delete this Batch Name?</p>
+                                                                                    <input type="hidden" name="id" value="<?= $batch_list1['id'] ?>">
+                                                                                    <input type="submit" name="delete_batch" value="Delete" class="btn btn-danger">
+                                                                                    <!-- <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button> -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div><!-- /.modal-content -->
+                                                                    </form>
+                                                                </div><!-- /.modal-dialog -->
+                                                            </div><!-- /.modal -->
+                                                        <?php 
+                                                        $x++;}
                                                     } else {
                                                         ?>
                                                         <div class="alert alert-danger alert-dismissible text-bg-danger border-0 fade show" role="alert">
