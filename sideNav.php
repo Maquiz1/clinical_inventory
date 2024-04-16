@@ -258,6 +258,26 @@
                                         </ul>
                                     </div>
                                 </li>
+                                <li class="side-nav-item">
+                                    <a data-bs-toggle="collapse" href="#Reports2" aria-expanded="false" aria-controls="Reports2">
+                                        <span> Reports 2 </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="Reports2">
+                                        <ul class="side-nav-second-level">
+                                            <?php
+                                            $x = 1;
+                                            foreach ($override->get('use_group', 'status', 1) as $categoryR1) {
+                                            ?>
+                                                <li>
+                                                    <a href="report6.php?report=0&category=<?= $categoryR1['id']; ?>"><?= $categoryR1['name']; ?></a>
+                                                </li>
+                                            <?php
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
 
